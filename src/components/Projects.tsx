@@ -101,26 +101,26 @@ export default function Projects() {
       const cards = gsap.utils.toArray<HTMLElement>('.project-card', section)
       if (cards.length < 2) return
 
-      // Card 0 centered, all others waiting off-screen to the right
+      gsap.set(cards, { xPercent: 100 })
       gsap.set(cards[0], { xPercent: 0 })
-      gsap.set(cards.slice(1), { xPercent: 100 })
 
       const tl = gsap.timeline()
 
-      // Use explicit fromTo with absolute time positions so every card's
-      // state is fully defined at each step — required for reliable scrubbing.
       cards.forEach((_, i) => {
         if (i === cards.length - 1) return
-        tl.fromTo(cards[i],     { xPercent: 0   }, { xPercent: -100, duration: 1, ease: 'none' }, i)
-        tl.fromTo(cards[i + 1], { xPercent: 100 }, { xPercent: 0,    duration: 1, ease: 'none' }, i)
+        tl.to(cards[i],     { xPercent: -100, duration: 1, ease: 'none' }, i)
+        tl.to(cards[i + 1], { xPercent: 0,    duration: 1, ease: 'none' }, i)
       })
+
+      // Keep the final card pinned for a little extra scroll space
+      tl.to(cards[cards.length - 1], { xPercent: 0, duration: 1, ease: 'none' })
 
       ScrollTrigger.create({
         trigger: section,
         pin: true,
         pinSpacing: true,
         start: 'top top',
-        end: () => `+=${(projects.length - 1) * window.innerHeight}`,
+        end: () => `+=${(projects.length - 1 + 1) * window.innerHeight}`,
         scrub: 1,
         animation: tl,
         invalidateOnRefresh: true,
@@ -131,7 +131,7 @@ export default function Projects() {
           ease: 'power2.inOut',
         },
       })
-    }, sectionRef)
+    }, section)
 
     return () => ctx.revert()
   }, [])
