@@ -151,7 +151,7 @@ export default function Projects() {
       </div>
 
       {/* Stacked cards — each fills the section, GSAP cross-fades between them */}
-      {projects.map((project, i) => (
+      {projects.map((project) => (
         <div
           key={project.title}
           className="project-card absolute inset-0 flex items-center justify-center"
