@@ -7,10 +7,16 @@ export default function Navbar() {
 
   useEffect(() => {
     const update = () => {
-      const hero = document.getElementById('hero')
-      if (!hero) return
-      const heroBottom = hero.offsetTop + hero.offsetHeight
-      setTheme(window.scrollY < heroBottom - 80 ? 'transparent' : 'dark')
+      const about = document.getElementById('about')
+      if (!about) {
+        setTheme('transparent')
+        return
+      }
+      // getBoundingClientRect reflects actual rendered position,
+      // works correctly with sticky/fixed elements.
+      // When #about's top reaches the navbar (~80px), switch to dark.
+      const rect = about.getBoundingClientRect()
+      setTheme(rect.top <= 80 ? 'dark' : 'transparent')
     }
 
     window.addEventListener('scroll', update, { passive: true })
