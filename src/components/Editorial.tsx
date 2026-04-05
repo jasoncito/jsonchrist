@@ -4,157 +4,129 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function Editorial() {
+const stack = [
+  { category: 'MOBILE',   items: ['React Native', 'Expo', 'iOS', 'Android'] },
+  { category: 'FRONTEND', items: ['React', 'Next.js', 'TypeScript', 'Tailwind', 'GSAP'] },
+  { category: 'BACKEND',  items: ['Node.js', 'NestJS', 'Express', 'PostgreSQL'] },
+  { category: 'CLOUD',    items: ['AWS Lambda', 'Cognito', 'CloudWatch', 'Bedrock'] },
+  { category: 'TOOLS',    items: ['Figma', 'Amplitude', 'Braze', 'Sentry', 'Algolia'] },
+]
+
+interface Props {
+  ready: boolean
+}
+
+export default function Editorial({ ready }: Props) {
   const sectionRef = useRef<HTMLElement>(null)
-  const line1      = useRef<HTMLDivElement>(null)
-  const line2      = useRef<HTMLDivElement>(null)
-  const line3      = useRef<HTMLDivElement>(null)
-  const infoRef    = useRef<HTMLDivElement>(null)
+  const panelRef   = useRef<HTMLDivElement>(null)
+  const labelRef   = useRef<HTMLDivElement>(null)
+  const nameRef    = useRef<HTMLDivElement>(null)
+  const bioRef     = useRef<HTMLDivElement>(null)
+  const stackRef   = useRef<HTMLDivElement>(null)
+  const metaRef    = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const section = sectionRef.current
+  useEffect(() => {}, [ready])
 
-      /* ─── ENTRANCE ─── */
-      // toggleActions reverse ensures animation plays back when scrolling up
-      gsap.fromTo(
-        [line1.current, line2.current, line3.current],
-        { y: '110%', opacity: 0 },
-        {
-          y: '0%',
-          opacity: 1,
-          duration: 1.1,
-          stagger: 0.1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 70%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      )
-
-      // Info block fades + rises
-      gsap.fromTo(
-        infoRef.current,
-        { opacity: 0, y: 32 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          delay: 0.3,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top 70%',
-            toggleActions: 'play none none reverse',
-          },
-        }
-      )
-
-      /* ─── EXIT ─── */
-      // Use fromTo with explicit "from" values so the scrub reversal
-      // correctly returns to the fully-visible state on scroll-back.
-      gsap.fromTo(
-        [line1.current, line2.current, line3.current],
-        { y: '0%', opacity: 1 },
-        {
-          y: '-60%',
-          opacity: 0,
-          stagger: 0.06,
-          ease: 'power2.in',
-          immediateRender: false,
-          scrollTrigger: {
-            trigger: section,
-            start: '80% top',
-            end: 'bottom -10%',
-            scrub: 1,
-          },
-        }
-      )
-
-      // Info block fades out
-      gsap.fromTo(
-        infoRef.current,
-        { opacity: 1, y: 0 },
-        {
-          opacity: 0,
-          y: -16,
-          ease: 'power2.in',
-          immediateRender: false,
-          scrollTrigger: {
-            trigger: section,
-            start: '80% top',
-            end: 'bottom top',
-            scrub: 1,
-          },
-        }
-      )
-    }, sectionRef)
-
-    return () => ctx.revert()
-  }, [])
-
-  const lineClass = 'whitespace-nowrap font-headline font-black italic leading-[0.88] tracking-tight'
-  const fontSize  = 'clamp(2.2rem, 7.5vw, 7rem)'
+  const MARQUEE_TEXT = 'REACT NATIVE · TYPESCRIPT · NODE.JS · REACT · AWS · POSTGRESQL · D3.JS · GSAP · NEXT.JS · TAILWIND CSS · FIGMA · '
 
   return (
     <section
       ref={sectionRef}
       id="about"
-      className="h-screen flex items-center overflow-hidden"
-      style={{ scrollSnapAlign: 'start' }}
+      className="relative h-screen flex justify-end overflow-hidden"
+      style={{ scrollSnapAlign: 'start', position: 'relative', zIndex: 2 }}
     >
-      <div className="w-full max-w-[1400px] mx-auto px-10 lg:px-16">
-        <div className="flex flex-col md:flex-row md:items-end gap-6 md:gap-16 lg:gap-24">
+      <div className="w-full h-full flex">
 
-          {/* Left — stacked display type */}
-          <div className="flex-1 min-w-0">
-            <div className="overflow-hidden">
-              <div ref={line1} className={`${lineClass} text-white opacity-0`} style={{ fontSize }}>
-                FRONT-END
+        {/* Left column — content over dark frosted panel */}
+        <div className="w-full md:w-[55%] h-full flex items-end">
+          <div ref={panelRef} className="bg-black/40 backdrop-blur-sm w-full h-full flex items-center px-10 lg:px-14 py-16">
+            <div className="max-w-lg w-full">
+
+              {/* Label */}
+              <div ref={labelRef} className="mb-6">
+                <span className="font-label text-[10px] font-bold tracking-[0.3em] uppercase text-white/40">
+                  ABOUT
+                </span>
               </div>
-            </div>
-            <div className="overflow-hidden">
-              <div ref={line2} className={`${lineClass} text-white opacity-0`} style={{ fontSize }}>
-                &amp; MOBILE
+
+              {/* Name */}
+              <div ref={nameRef} className="mb-5">
+                <h2
+                  className="font-headline italic font-black text-white leading-none"
+                  style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)' }}
+                >
+                  Jeison Christ
+                </h2>
               </div>
-            </div>
-            <div className="overflow-hidden">
-              <div ref={line3} className={`${lineClass} opacity-0`} style={{ fontSize, color: '#c8f135' }}>
-                ENGINEER.
+
+              {/* Bio */}
+              <div ref={bioRef} className="mb-10">
+                <p className="font-body text-sm leading-relaxed text-white/55 max-w-sm">
+                  Full-Stack &amp; Mobile Engineer based in Quito, Ecuador. 6+ years building
+                  products for startups and scale-ups across Latin America and remote
+                  international teams.
+                </p>
               </div>
+
+              {/* Stack grid */}
+              <div ref={stackRef} className="mb-10">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+                  {stack.map(({ category, items }) => (
+                    <div key={category}>
+                      <span className="font-label text-[9px] font-bold tracking-[0.25em] uppercase text-white/30 block mb-2">
+                        {category}
+                      </span>
+                      <ul className="flex flex-col gap-1">
+                        {items.map(item => (
+                          <li key={item} className="font-body text-xs text-white/55 leading-snug">
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Meta */}
+              <div ref={metaRef} className="flex flex-wrap gap-8 pt-2 border-t border-white/[0.08]">
+                <div className="flex flex-col gap-1">
+                  <span className="font-label text-[9px] font-bold tracking-[0.25em] uppercase text-white/30">
+                    Experience
+                  </span>
+                  <span className="font-body text-sm text-white/70">6+ years</span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="font-label text-[9px] font-bold tracking-[0.25em] uppercase text-white/30">
+                    Availability
+                  </span>
+                  <span className="font-body text-sm" style={{ color: '#c8f135' }}>
+                    Open to remote roles
+                  </span>
+                </div>
+                <div className="flex flex-col gap-1">
+                  <span className="font-label text-[9px] font-bold tracking-[0.25em] uppercase text-white/30">
+                    Location
+                  </span>
+                  <span className="font-body text-sm text-white/70">Quito, Ecuador</span>
+                </div>
+              </div>
+
             </div>
           </div>
+        </div>
 
-          {/* Right — info block */}
-          <div ref={infoRef} className="shrink-0 md:w-52 lg:w-60 flex flex-row flex-wrap md:flex-col gap-x-8 gap-y-4 md:gap-6 opacity-0 md:pb-1">
+        {/* Right column — intentionally empty; hero image shows through */}
+        <div className="hidden md:block md:w-[45%] shrink-0" />
 
-            <div className="flex flex-col gap-1 min-w-[6rem]">
-              <span className="font-label text-[10px] font-bold tracking-[0.28em] uppercase" style={{ color: 'rgba(255,255,255,0.28)' }}>Role</span>
-              <span className="font-body text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>Full-Stack / Mobile</span>
-            </div>
+      </div>
 
-            <div className="flex flex-col gap-1 min-w-[6rem]">
-              <span className="font-label text-[10px] font-bold tracking-[0.28em] uppercase" style={{ color: 'rgba(255,255,255,0.28)' }}>Experience</span>
-              <span className="font-body text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>6 years</span>
-            </div>
-
-            <div className="flex flex-col gap-1 min-w-[6rem]">
-              <span className="font-label text-[10px] font-bold tracking-[0.28em] uppercase" style={{ color: 'rgba(255,255,255,0.28)' }}>Stack</span>
-              <span className="font-body text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>
-                React Native · TS<br />React · Node · AWS
-              </span>
-            </div>
-
-            <div className="flex flex-col gap-1 min-w-[6rem]">
-              <span className="font-label text-[10px] font-bold tracking-[0.28em] uppercase" style={{ color: 'rgba(255,255,255,0.28)' }}>Location</span>
-              <span className="font-body text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)' }}>
-                Quito, Ecuador<br />
-                <span style={{ color: 'rgba(255,255,255,0.4)' }}>Worldwide</span>
-              </span>
-            </div>
-
+      {/* Scrolling marquee strip — bottom of section */}
+      <div className="absolute bottom-0 left-0 right-0 border-t border-white/[0.08]">
+        <div className="marquee-container py-4">
+          <div className="marquee-content font-label text-[10px] tracking-[0.35em] uppercase text-white/25 select-none">
+            {MARQUEE_TEXT.repeat(2)}
           </div>
         </div>
       </div>

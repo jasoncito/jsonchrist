@@ -4,7 +4,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-export default function Hero() {
+interface Props {
+  ready: boolean
+}
+
+export default function Hero({ ready }: Props) {
   const badgeRef      = useRef<HTMLDivElement>(null)
   const imageRef      = useRef<HTMLImageElement>(null)
   const locationRef   = useRef<HTMLDivElement>(null)
@@ -14,6 +18,7 @@ export default function Hero() {
   const scrollRef     = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
+    if (!ready) return
     const ctx = gsap.context(() => {
 
       /* ─── ENTRANCE ─── */
@@ -102,13 +107,13 @@ export default function Hero() {
     })
 
     return () => ctx.revert()
-  }, [])
+  }, [ready])
 
   return (
     <header
       id="hero"
       className="relative h-screen topo-texture"
-      style={{ scrollSnapAlign: 'start' }}
+      style={{ position: 'sticky', top: 0, overflow: 'hidden' }}
     >
       {/* Available badge */}
       <div
@@ -179,6 +184,12 @@ export default function Hero() {
         <div className="w-px h-12 bg-[#111111]/30 animate-pulse" />
         <span className="font-mono text-[9px] tracking-widest uppercase text-[#111111]/40">scroll</span>
       </div>
+
+      {/* Bottom fade — suaviza transición hacia Editorial (olive #1C2B1A) */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-48 pointer-events-none z-40"
+        style={{ background: 'linear-gradient(to bottom, transparent, #1C2B1A)' }}
+      />
     </header>
   )
 }

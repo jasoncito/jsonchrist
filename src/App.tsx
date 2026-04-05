@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Navbar from './components/Navbar'
@@ -7,6 +7,8 @@ import Editorial from './components/Editorial'
 import Projects from './components/Projects'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
+import Preloader from './components/Preloader'
+import Cursor from './components/Cursor'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -20,6 +22,7 @@ const TRANSITIONS = [
 ]
 
 export default function App() {
+  const [ready, setReady] = useState(false)
   const canvasRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -51,6 +54,8 @@ export default function App() {
 
   return (
     <>
+      <Preloader onComplete={() => setReady(true)} />
+      <Cursor />
       {/* Full-page colour canvas — sits behind all transparent sections */}
       <div
         ref={canvasRef}
@@ -58,8 +63,10 @@ export default function App() {
         style={{ backgroundColor: '#F2EDE4' }}
       />
       <Navbar />
-      <Hero />
-      <Editorial />
+      <div style={{ position: 'relative', height: '200vh', zIndex: 0 }}>
+        <Hero ready={ready} />
+        <Editorial ready={ready} />
+      </div>
       <Projects />
       <Contact />
       <Footer />

@@ -10,8 +10,7 @@ const projects = [
     year: '2024',
     tech: ['React Native', 'Node.js'],
     url: 'luminapay.app/dashboard',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuCbP_S78aiosF80xs3whOa8KeHP_N_AeCGavKOjvMLaf1MYQuJTqeB7UrkvyAdz3t7VY_OQAlT2ktA3XbHn0jN4DKpq2zQQ4FaiSJS0YwmZdXJMHePVupZt8rcXEhmeg0lyHq99bGp4MIc0NBXpuyKM0BRgLgzgzmkGCUMBq1wspGwrC0ENtXtrOWPBcVgLdIVrkML5sptTeaO0CeQkZLEsG1dyg6IGn-h8Mhhz0Q_CvTJpA9FbWE8HNXu1aF1lqRmWx6kVxBM1raY',
+    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200',
     alt: 'Mobile banking app user interface',
     desc: 'Fintech payment platform with real-time transfers, smart analytics, and instant card controls.',
   },
@@ -20,8 +19,7 @@ const projects = [
     year: '2023',
     tech: ['Next.js', 'TypeScript', 'PostgreSQL'],
     url: 'atlas-crm.io/contacts',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuDgtIFAN910W8E96H2cfWvu1Kh99uL2hCquAlAk-2xpazMIGq9UHITbV1vB59US1yvlRb6n6DqtcebInQ5GAk1b0TYHvSea88bzIR67Yd4d_1Nzm87uQP3m2U6Pyi4bqCxy7gQ8LSI1_dZxYmKDWpPvD_ZGsdOX-kdNdCbX7OSzFd5akERbZ1YVRrOvZeOTTWFd5iM2FTqVBbFPv3VK6UthkXovn0IUORSTJ__e9YFRpBw1-mFujN4D8hvjYua1xVbn-dhP6c0GlYs',
+    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200',
     alt: 'CRM dashboard interface',
     desc: 'Full-featured CRM with pipeline management, email sequences, and revenue forecasting.',
   },
@@ -30,8 +28,7 @@ const projects = [
     year: '2023',
     tech: ['AWS', 'React', 'D3.js'],
     url: 'verve.analytics/overview',
-    image:
-      'https://lh3.googleusercontent.com/aida-public/AB6AXuBvP8jQ_mprbvNK1_s7C3hxYzH9WFNVJxGnx-D3DSkXO_rcwA5RHV6GPn5wXV2u15EpbBPDzq57plRX7xvlYi8Vu6WGw6uGou5tweeeAQwCISFInOOdrrYrZJRACfQGZGJNSd4oaNSRqhBFXwrzBpl17I8eamV-d7IgDPxAXVKnkg7isG_MOvRbgGSlZpUzxztaTpYVfwjksgoXX2AQaDGF1vMa856TLRxMfpIuXPG555THRfhv4Lu-vAdM--E4aXIzpagjZAAsKIg',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200',
     alt: 'Data analytics dashboard',
     desc: 'Real-time data platform processing 10M+ events daily with custom visualization engine.',
   },
@@ -99,37 +96,41 @@ export default function Projects() {
 
     const ctx = gsap.context(() => {
       const cards = gsap.utils.toArray<HTMLElement>('.project-card', section)
+      const bgs   = gsap.utils.toArray<HTMLElement>('.project-bg', section)
+
       if (cards.length < 2) return
 
+      // ─── Cards (unchanged) ───
       gsap.set(cards, { xPercent: 100 })
       gsap.set(cards[0], { xPercent: 0 })
+
+      // ─── Backgrounds — initial opacity state ───
+      gsap.set(bgs[0], { opacity: 1 })
+      if (bgs.length > 1) gsap.set(bgs.slice(1), { opacity: 0 })
 
       const tl = gsap.timeline()
 
       cards.forEach((_, i) => {
         if (i === cards.length - 1) return
+
+        // Layer 1 — cards (exactly as before)
         tl.to(cards[i],     { xPercent: -100, duration: 1, ease: 'none' }, i)
         tl.to(cards[i + 1], { xPercent: 0,    duration: 1, ease: 'none' }, i)
-      })
 
-      // Keep the final card pinned for a little extra scroll space
-      tl.to(cards[cards.length - 1], { xPercent: 0, duration: 1, ease: 'none' })
+        // Layer 2 — backgrounds crossfade centered at mid-transition
+        tl.to(bgs[i],     { opacity: 0, duration: 0.4, ease: 'none' }, i + 0.3)
+        tl.to(bgs[i + 1], { opacity: 1, duration: 0.4, ease: 'none' }, i + 0.3)
+      })
 
       ScrollTrigger.create({
         trigger: section,
         pin: true,
         pinSpacing: true,
         start: 'top top',
-        end: () => `+=${(projects.length - 1 + 1) * window.innerHeight}`,
-        scrub: 1,
+        end: () => `+=${(projects.length - 1) * window.innerHeight}`,
+        scrub: 1.2,
         animation: tl,
         invalidateOnRefresh: true,
-        snap: {
-          snapTo: 1 / (projects.length - 1),
-          duration: { min: 0.4, max: 0.8 },
-          delay: 0.05,
-          ease: 'power2.inOut',
-        },
       })
     }, section)
 
@@ -139,6 +140,33 @@ export default function Projects() {
   return (
     // No scrollSnapAlign — GSAP pin owns this zone
     <section ref={sectionRef} id="projects" className="h-screen relative overflow-hidden">
+
+      {/* ─── Background layers — z-0, behind cards ─── */}
+      {projects.map((project) => (
+        <div
+          key={`bg-${project.title}`}
+          className="project-bg absolute inset-0 z-0"
+        >
+          {/* Fullscreen project image */}
+          <img
+            src={project.image}
+            alt=""
+            aria-hidden="true"
+            className="w-full h-full object-cover"
+          />
+          {/* Dark overlay */}
+          <div className="absolute inset-0 bg-black/60" />
+          {/* Giant ghost title */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none">
+            <span
+              className="font-headline italic font-black text-white"
+              style={{ fontSize: 'clamp(80px, 12vw, 160px)', opacity: 0.07 }}
+            >
+              {project.title}
+            </span>
+          </div>
+        </div>
+      ))}
 
       {/* Persistent header — always on top */}
       <div className="absolute top-0 left-0 right-0 px-10 pt-14 z-30 flex items-center justify-between pointer-events-none">
@@ -150,11 +178,11 @@ export default function Projects() {
         </span>
       </div>
 
-      {/* Stacked cards — each fills the section, GSAP cross-fades between them */}
+      {/* Stacked cards — each fills the section, GSAP slides between them */}
       {projects.map((project) => (
         <div
           key={project.title}
-          className="project-card absolute inset-0 flex items-center justify-center"
+          className="project-card absolute inset-0 z-10 flex items-center justify-center"
           style={{ paddingTop: '96px', paddingBottom: '72px', paddingLeft: '24px', paddingRight: '24px' }}
         >
           <div className="mx-auto">
