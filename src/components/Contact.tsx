@@ -108,21 +108,21 @@ export default function Contact() {
     <section
       ref={sectionRef}
       id="contact"
-      className="h-screen flex items-center text-[#F5F0E8] overflow-hidden relative"
+      className="min-h-screen md:h-screen flex items-center text-[#F5F0E8] relative py-28 md:py-0"
       style={{ scrollSnapAlign: 'start' }}
     >
-      <div className="container mx-auto px-8 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
+      <div className="container mx-auto px-6 md:px-8 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
 
           {/* Left: headline + email + links */}
           <div className="pt-8">
             <span ref={labelRef} className="font-label text-[10px] tracking-[0.3em] uppercase text-primary-container block mb-8 opacity-0">
               Get in touch
             </span>
-            <h2 ref={line1Ref} className="font-headline text-6xl md:text-8xl font-light leading-none mb-2 opacity-0">
+            <h2 ref={line1Ref} className="font-headline text-5xl md:text-6xl lg:text-8xl font-light leading-none mb-2 opacity-0">
               Let's build
             </h2>
-            <h2 ref={line2Ref} className="font-headline italic text-6xl md:text-8xl font-bold text-primary-container leading-none mb-12 opacity-0">
+            <h2 ref={line2Ref} className="font-headline italic text-5xl md:text-6xl lg:text-8xl font-bold text-primary-container leading-none mb-8 md:mb-12 opacity-0">
               something.
             </h2>
             <p ref={bodyRef} className="font-body text-sm text-[#F5F0E8]/50 mb-10 max-w-xs leading-relaxed opacity-0">
@@ -131,22 +131,22 @@ export default function Contact() {
             <a
               ref={emailRef}
               href="mailto:jeison@christ.dev"
-              className="group inline-block font-mono text-lg text-[#F5F0E8] tracking-tight transition-all duration-300 mb-10 opacity-0"
+              className="group inline-block font-mono text-base md:text-lg text-[#F5F0E8] tracking-tight transition-all duration-300 mb-8 md:mb-10 opacity-0 py-2"
             >
               jeison@christ.dev
               <div className="h-px w-0 group-hover:w-full bg-primary-container transition-all duration-500 mt-1" />
             </a>
-            <div ref={linksRef} className="flex gap-8 mt-6 opacity-0">
+            <div ref={linksRef} className="flex gap-6 mt-4 opacity-0">
               <a
                 href="#"
-                className="text-[#F5F0E8]/50 hover:text-primary-container transition-colors flex items-center gap-2"
+                className="text-[#F5F0E8]/50 hover:text-primary-container transition-colors flex items-center gap-2 py-3 pr-3"
               >
                 <span className="font-label text-xs tracking-widest uppercase">LinkedIn</span>
                 <span className="material-symbols-outlined text-sm">north_east</span>
               </a>
               <a
                 href="#"
-                className="text-[#F5F0E8]/50 hover:text-primary-container transition-colors flex items-center gap-2"
+                className="text-[#F5F0E8]/50 hover:text-primary-container transition-colors flex items-center gap-2 py-3 pr-3"
               >
                 <span className="font-label text-xs tracking-widest uppercase">Github</span>
                 <span className="material-symbols-outlined text-sm">north_east</span>
@@ -155,7 +155,7 @@ export default function Contact() {
           </div>
 
           {/* Right: form */}
-          <div ref={formRef} className="bg-white/5 p-10 rounded-3xl backdrop-blur-sm opacity-0">
+          <div ref={formRef} className="bg-white/5 p-6 md:p-10 rounded-3xl backdrop-blur-sm opacity-0">
             <form className="flex flex-col gap-8">
               <div className="contact-field flex flex-col gap-2 opacity-0">
                 <label className="font-label text-[10px] uppercase tracking-widest opacity-40">

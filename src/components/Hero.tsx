@@ -118,7 +118,7 @@ export default function Hero({ ready }: Props) {
       {/* Available badge */}
       <div
         ref={badgeRef}
-        className="absolute top-28 left-8 z-30 inline-flex items-center gap-2 bg-surface-container-lowest border border-outline-variant/20 px-4 py-2 rounded-full opacity-0"
+        className="absolute top-24 md:top-28 left-6 md:left-8 z-30 inline-flex items-center gap-2 bg-surface-container-lowest border border-outline-variant/20 px-4 py-2 rounded-full opacity-0"
       >
         <span className="w-2 h-2 rounded-full bg-[#c8f135] shadow-[0_0_8px_#c8f135]" />
         <span className="font-label text-[10px] tracking-[0.2em] uppercase font-medium">
@@ -129,23 +129,23 @@ export default function Hero({ ready }: Props) {
       {/* Split layout */}
       <div className="h-full flex">
         {/* Left — headline */}
-        <div className="flex-1 min-w-0 flex flex-col justify-center pl-10 lg:pl-16 pt-20 z-10 pointer-events-none select-none">
+        <div className="flex-1 min-w-0 flex flex-col justify-center pl-6 md:pl-10 lg:pl-16 pr-6 md:pr-0 pt-20 z-10 pointer-events-none select-none">
           <div
             ref={headline1Ref}
-            className="font-headline font-black text-[clamp(2rem,4.5vw,4.5rem)] leading-none tracking-tight text-[#111111] opacity-0"
+            className="font-headline font-black text-[clamp(2.6rem,9vw,4.5rem)] leading-none tracking-tight text-[#111111] opacity-0"
           >
             I BUILD PRODUCTS
           </div>
           <div
             ref={headline2Ref}
-            className="font-headline font-black italic text-[clamp(2rem,4.5vw,4.5rem)] leading-none tracking-tight opacity-0"
+            className="font-headline font-black italic text-[clamp(2.6rem,9vw,4.5rem)] leading-none tracking-tight opacity-0"
             style={{ WebkitTextStroke: '2px #547400', color: 'transparent' }}
           >
             PEOPLE LOVE.
           </div>
           <div
             ref={descriptorRef}
-            className="mt-6 font-body text-sm tracking-[0.18em] uppercase text-[#111111]/40 opacity-0"
+            className="mt-6 font-body text-xs md:text-sm tracking-[0.18em] uppercase text-[#111111]/40 opacity-0"
           >
             Full-stack engineer · React · Node · AWS · 6 years
           </div>

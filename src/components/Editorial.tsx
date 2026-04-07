@@ -33,14 +33,14 @@ export default function Editorial({ ready }: Props) {
     <section
       ref={sectionRef}
       id="about"
-      className="relative h-screen flex justify-end overflow-hidden"
+      className="relative min-h-screen md:h-screen flex justify-end overflow-y-auto md:overflow-hidden"
       style={{ scrollSnapAlign: 'start', position: 'relative', zIndex: 2 }}
     >
       <div className="w-full h-full flex">
 
         {/* Left column — content over dark frosted panel */}
         <div className="w-full md:w-[55%] h-full flex items-end">
-          <div ref={panelRef} className="bg-black/40 backdrop-blur-sm w-full h-full flex items-center px-10 lg:px-14 py-16">
+          <div ref={panelRef} className="bg-black/40 backdrop-blur-sm w-full h-full flex items-center px-6 md:px-10 lg:px-14 py-24 md:py-16">
             <div className="max-w-lg w-full">
 
               {/* Label */}
@@ -71,7 +71,7 @@ export default function Editorial({ ready }: Props) {
 
               {/* Stack grid */}
               <div ref={stackRef} className="mb-10">
-                <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
+                <div className="grid grid-cols-2 lg:grid-cols-3 gap-x-4 md:gap-x-8 gap-y-5 md:gap-y-6">
                   {stack.map(({ category, items }) => (
                     <div key={category}>
                       <span className="font-label text-[9px] font-bold tracking-[0.25em] uppercase text-white/30 block mb-2">

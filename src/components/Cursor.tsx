@@ -59,16 +59,16 @@ export default function Cursor() {
 
   return (
     <>
-      {/* Dot — instant follow */}
+      {/* Dot — instant follow, hidden on touch devices */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 w-2 h-2 rounded-full bg-white z-[300] pointer-events-none"
+        className="hidden md:block fixed top-0 left-0 w-2 h-2 rounded-full bg-white z-[300] pointer-events-none"
         style={{ mixBlendMode: 'difference' }}
       />
-      {/* Ring — trailing follow */}
+      {/* Ring — trailing follow, hidden on touch devices */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 w-10 h-10 rounded-full border border-white z-[300] pointer-events-none"
+        className="hidden md:block fixed top-0 left-0 w-10 h-10 rounded-full border border-white z-[300] pointer-events-none"
         style={{ mixBlendMode: 'difference' }}
       />
     </>

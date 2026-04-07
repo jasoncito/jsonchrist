@@ -36,9 +36,9 @@ export default function Footer() {
         <div ref={locationRef} className="hidden md:flex gap-8 opacity-0">
           <span className="text-[#0D0D0D]">Quito, Ecuador</span>
         </div>
-        <div ref={linksRef} className="flex gap-4 opacity-0">
-          <a href="#" className="hover:text-[#c8f135] transition-colors">LinkedIn</a>
-          <a href="#" className="hover:text-[#c8f135] transition-colors">Github</a>
+        <div ref={linksRef} className="flex gap-2 opacity-0">
+          <a href="#" className="hover:text-[#c8f135] transition-colors py-2 px-2">LinkedIn</a>
+          <a href="#" className="hover:text-[#c8f135] transition-colors py-2 px-2">Github</a>
         </div>
       </div>
     </footer>
